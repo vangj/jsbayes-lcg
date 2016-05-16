@@ -1,0 +1,32 @@
+{
+  "name": "jsbayes-lcg",
+  "description": "Simple Linear Conditional Gaussian (LCG) Bayesian Belief Network (BBN) inference library in JavaScript.",
+  "main": "jsbayes-lcg.js",
+  "authors": [
+    "Jee Vang <vangjee@gmail.com> (http://vangjee.wordpress.com)"
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "bayesian",
+    "belief",
+    "network",
+    "javascript",
+    "probabilistic",
+    "probability",
+    "inference",
+    "sampling",
+    "causal",
+    "linear",
+    "conditional",
+    "gaussian",
+    "bbn"
+  ],
+  "homepage": "https://github.com/vangj/jsbayes-lcg",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
