@@ -1,7 +1,7 @@
 jsbayes-lcg
 ===========
 
-This JavaScript library is a Bayesian Belief Network (BBN) inference tool using Gibbs sampling. The form of the BBN is assumed to be Linear Conditional Gaussian (LCG). A LCG BBN is one where the joint distribution is defined by a multivariate normal Gaussian distribution. In this library, all variables in a LCG BBN are continuous (as opposed to discrete). If you are working with discrete variables, please take a look at [jsbayes](https://github.com/vangj/jsbayes).
+This JavaScript library is a Bayesian Belief Network (BBN) inference tool using Gibbs sampling. The form of the BBN is assumed to be Linear Gaussian (LG). A LG BBN is one where the joint distribution is defined by a multivariate normal Gaussian distribution and each local probability models is defined by a linear combination of its parents. In this library, all variables in a LG BBN are continuous (as opposed to discrete). If you are working with discrete variables, please take a look at [jsbayes](https://github.com/vangj/jsbayes).
 
 #How do I get the library?
 
