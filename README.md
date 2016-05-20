@@ -69,3 +69,33 @@ n1.unobserve();
 g.sample(T);
 ```
 
+#Computing the means and covariance matrix
+There are util methods for you to compute the means and covariance matrix. Assume you have a matrix of data as follows.
+
+```
+var data = [
+ [0, 1, 9],
+ [1, 2, 8],
+ [2, 3, 7],
+ [3, 4, 6],
+ [4, 5, 5],
+ [5, 6, 4],
+ [6, 7, 3],
+ [7, 8, 2],
+ [8, 9, 1],
+ [9, 10, 0]
+];
+```
+
+Then you can compute the means (column vector of 3 rows by 1 column) and covariance matrix (3 rows by 3 columns).
+
+```
+var means = jsbayeslcg.getMeans(data);
+var sigma = jsbayeslcg.getCovMatrix(data);
+```
+
+You may then feed the means and covariance matrix directly back into jsbayes-lcg to partly specify the BBN.
+
+```
+var g = jsbayeslcg.newGraph(means, sigma);
+```

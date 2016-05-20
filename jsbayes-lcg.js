@@ -252,8 +252,49 @@
     }
     return x;
   }
+  function getCov(i, j, x) {
+    var XY = 0.0, X = 0.0, Y = 0.0, N = 0.0;
+    for(var r=0; r < x.length; r++) {
+      XY += (x[r][i] * x[r][j]);
+      X += x[r][i];
+      Y += x[r][j];
+      N += 1.0;
+    }
+    var cov = (XY - ((X * Y) / N)) / (N - 1.0);
+    return cov;
+  }
   function defineLib() {
     var lib = {};
+    lib.getCovMatrix = function(data) {
+      var rows = data.length;
+      var cols = data[0].length;
+      var cov = newMatrix(cols, cols);
+
+      for(var i=0; i < cols; i++) {
+        for(var j=i; j < cols; j++) {
+          var c = getCov(i, j, data);
+          cov[i][j] = cov[j][i] = c;
+        }
+      }
+
+      return cov;
+    }
+    lib.getMeans = function(x) {
+      var means = [];
+      var rows = x.length, cols = x[0].length;
+      for(var r=0; r < rows; r++) {
+        for(var c=0; c < cols; c++) {
+          if(!means[c]) {
+            means.push([0.0]);
+          }
+          means[c][0] += x[r][c];
+        }
+      }
+      for(var i=0; i < means.length; i++) {
+        means[i][0] = (means[i][0] / rows);
+      }
+      return means;
+    }
     lib.newGraph = function(means, sigma) {
       return {
         means: means,
