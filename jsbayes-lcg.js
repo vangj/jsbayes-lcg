@@ -213,7 +213,7 @@
         return (this.parents.indexOf(i) >= 0);
       },
       sample: function(x) {
-        if(this.mean) {
+        if(this.mean !== undefined) {
           return getSample(this.mean, this.stdev);
         } else {
           var m = this.b0;
