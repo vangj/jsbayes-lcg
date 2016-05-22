@@ -5,46 +5,46 @@ var jsbayeslcg = require('../jsbayes-lcg');
 describe('#graph', function() {
     it('verfies inference', function() {
         var g = jsbayeslcg.newGraph([ [1], [-4.5], [8.5] ], [ [4,2,-1], [2, 5, -5], [-2, -5, 8]]);
-        var n3 = g.defineNode(2, [1]);
-        var n2 = g.defineNode(1, [0]);
-        var n1 = g.defineNode(0);
+        var n3 = g.defineNode('n2', 2, [1]);
+        var n2 = g.defineNode('n1', 1, [0]);
+        var n1 = g.defineNode('n1', 0);
 
         var T = 10000;
         g.sample(T);
-        
+
         var avg1 = n1.avg;
         var avg2 = n2.avg;
         var avg3 = n3.avg;
-        
+
         expect(avg1).to.be.within(0.90, 1.05);
         expect(Math.abs(avg2)).to.be.within(4.4, 4.9);
         expect(avg3).to.be.within(8.4, 8.8);
-        
+
         n1.observe(2.5);
         g.sample(T);
-        
+
         avg1 = n1.avg;
         avg2 = n2.avg;
         avg3 = n3.avg;
-        
+
         expect(avg1).to.be.within(2.4, 2.6);
         expect(Math.abs(avg2)).to.be.within(3.5, 3.8);
         expect(avg3).to.be.within(7.5, 7.9);
-        
+
         n1.unobserve();
         g.sample(T);
-        
+
         avg1 = n1.avg;
         avg2 = n2.avg;
         avg3 = n3.avg;
-        
+
         expect(avg1).to.be.within(0.90, 1.05);
         expect(Math.abs(avg2)).to.be.within(4.4, 4.9);
         expect(avg3).to.be.within(8.4, 8.8);
     });
 });
 
-describe('#covariance', function() { 
+describe('#covariance', function() {
   it('verifies covariance', function() {
     function getBoxMullerSample() {
       var x1, x2, w;
@@ -73,7 +73,7 @@ describe('#covariance', function() {
     }
 
     var sigma = jsbayeslcg.getCovMatrix(data);
-    
+
     expect(sigma.length).to.equals(4);
     expect(sigma[0].length).to.equals(4);
     for(var r=0; r < sigma.length; r++) {
@@ -120,7 +120,7 @@ describe('#means', function() {
     }
 
     var means = jsbayeslcg.getMeans(data);
-    
+
     expect(means.length).to.equals(4);
     expect(means[0].length).to.equals(1);
     expect(Math.abs(means[0][0])).to.be.within(0.0, 0.01);

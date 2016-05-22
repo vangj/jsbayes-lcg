@@ -32,15 +32,15 @@ var means = [
 ];
 //sigma is a covariance matrix
 var sigma = [
-    [4,2,-1], 
-    [2, 5, -5], 
+    [4,2,-1],
+    [2, 5, -5],
     [-2, -5, 8]
 ];
 var g = jsbayeslcg.newGraph(means, sigma);
 //define the structure (or parent-child relationships)
-var n3 = g.defineNode(2, [1]); //node 1 is a parent of node 2
-var n2 = g.defineNode(1, [0]); //node 0 is a parent of node 1
-var n1 = g.defineNode(0); //node 0 has no parents
+var n3 = g.defineNode('n2', 2, [1]); //node 1 is a parent of node 2
+var n2 = g.defineNode('n1', 1, [0]); //node 0 is a parent of node 1
+var n1 = g.defineNode('n0', 0); //node 0 has no parents
 ```
 
 You can then perform inference.

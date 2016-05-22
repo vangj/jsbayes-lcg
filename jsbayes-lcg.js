@@ -165,7 +165,7 @@
     }
     return m_x;
   }
-  function getNode(i, parents, mean, variance, b0, b) {
+  function getNode(name, i, parents, mean, variance, b0, b) {
     function getBoxMullerSample() {
       var x1, x2, w;
       do {
@@ -183,6 +183,7 @@
       return s;
     }
     return {
+      name: name,
       id: i,
       parents: parents,
       mean: mean,
@@ -211,7 +212,7 @@
         }
         return (this.parents.indexOf(i) >= 0);
       },
-      sample: function(x) { 
+      sample: function(x) {
         if(this.mean) {
           return getSample(this.mean, this.stdev);
         } else {
@@ -220,7 +221,7 @@
             m += (b[i] * x[i]);
           }
           return getSample(m, this.stdev);
-        } 
+        }
       }
     };
   }
@@ -233,7 +234,7 @@
   }
   function sortNodes(nodes) {
     var arr = copyArray(nodes);
-    arr.sort(function(a, b) { 
+    arr.sort(function(a, b) {
       if(a.containsParent(b.id)) {
         return 1;
       } else if(b.containsParent(a.id)) {
@@ -306,10 +307,10 @@
           var opts = options || {};
           var D_ROW = opts.rowDelimiter || '\n';
           var D_FIELD = opts.fieldDelimiter || ',';
-          
+
           var csv = '';
           var row = '';
-          
+
           for(var i=0; i < this.nodes.length; i++) {
             row += this.nodes[i].id;
             if(i < this.nodes.length-1) {
@@ -317,7 +318,7 @@
             }
           }
           csv += row + D_ROW;
-          
+
           for(var i=0; i < this.samples.length; i++) {
             var sample = this.samples[i];
             row = '';
@@ -332,7 +333,7 @@
               csv += D_ROW;
             }
           }
-          
+
           return csv;
         },
         node: function(index) {
@@ -344,9 +345,9 @@
           }
           return this._nodes[index];
         },
-        defineNode: function(i, parents) {
+        defineNode: function(name, i, parents) {
           var mean, variance, b_0, b;
-          
+
           if(parents && parents.length > 0) {
             var m_y = means[i];
             var m_x = mx(parents, this.means);
@@ -354,7 +355,7 @@
             var E_xx = Exx(parents, this.sigma);
             var E_xy = Exy(i, parents, this.sigma);
             var E_yy = Eyy(i, this.sigma);
-            
+
             b_0 = m_y - multiply(multiply(transpose(E_yx), inverse(E_xx)), m_x);
             b = multiply(transpose(E_yx), inverse(E_xx));
             variance = subtract(E_yy, multiply(multiply(transpose(E_yx), inverse(E_xx)), E_xy))[0][0];
@@ -362,19 +363,19 @@
             mean = means[i][0];
             variance = sigma[i][i];
           }
-          
+
           parents = parents || [];
-          var node = getNode(i, parents, mean, variance, b_0, b);
+          var node = getNode(name, i, parents, mean, variance, b_0, b);
           this.nodes.push(node);
           return node;
         },
         sample: function(T) {
           this.samples.length = 0;
-          
+
           for(var i=0; i < this.nodes.length; i++) {
             this.nodes[i].reset();
           }
-          
+
           var nodes = sortNodes(this.nodes);
           for(var t=0; t < T; t++) {
             var currSample = {};
@@ -390,12 +391,12 @@
               currSample[node.id] = s;
               node.sum += s;
             }
-            
+
             if(this.saveSamples) {
               this.samples.push(currSample);
             }
           }
-          
+
           for(var i=0; i < this.nodes.length; i++) {
             this.nodes[i].avg = this.nodes[i].sum / T;
           }
