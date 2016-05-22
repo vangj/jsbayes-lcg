@@ -3,10 +3,29 @@ var should = require('chai').should()
 var jsbayeslcg = require('../jsbayes-lcg');
 
 describe('#graph', function() {
+    it('verifies get node by id', function() {
+      var g = jsbayeslcg.newGraph([ [1], [-4.5], [8.5] ], [ [4,2,-1], [2, 5, -5], [-2, -5, 8]]);
+      var n2 = g.defineNode('n2', 2, [1]);
+      var n1 = g.defineNode('n1', 1, [0]);
+      var n0 = g.defineNode('n0', 0);
+
+      var nn2 = g.node(2);
+      var nn1 = g.node(1);
+      var nn0 = g.node(0);
+
+      expect(nn0.id).to.equals(0);
+      expect(nn0.name).to.equals('n0');
+
+      expect(nn1.id).to.equals(1);
+      expect(nn1.name).to.equals('n1');
+
+      expect(nn2.id).to.equals(2);
+      expect(nn2.name).to.equals('n2');
+    });
     it('verfies inference', function() {
         var g = jsbayeslcg.newGraph([ [1], [-4.5], [8.5] ], [ [4,2,-1], [2, 5, -5], [-2, -5, 8]]);
-        var n3 = g.defineNode('n2', 2, [1]);
-        var n2 = g.defineNode('n1', 1, [0]);
+        var n3 = g.defineNode('n3', 2, [1]);
+        var n2 = g.defineNode('n2', 1, [0]);
         var n1 = g.defineNode('n1', 0);
 
         var T = 10000;

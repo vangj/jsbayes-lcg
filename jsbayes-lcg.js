@@ -340,7 +340,8 @@
           if(!this._nodes) {
             this._nodes = {};
             for(var i=0; i < this.nodes.length; i++) {
-              this._nodes[i] = this.nodes[i];
+              var node = this.nodes[i];
+              this._nodes[node.id] = this.nodes[i];
             }
           }
           return this._nodes[index];
