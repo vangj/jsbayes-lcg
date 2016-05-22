@@ -99,3 +99,6 @@ You may then feed the means and covariance matrix directly back into jsbayes-lcg
 ```
 var g = jsbayeslcg.newGraph(means, sigma);
 ```
+
+#NOTICE
+THIS IS BETA SOFTWARE, USE AT YOUR OWN RISK.
